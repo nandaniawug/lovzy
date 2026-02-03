@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ETERNITY v3.0 | Nang Ngin Hmway</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@400;900&family=Poppins:wght@300;600&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gemini: #ffcc00; --scorpio: #9d4edd; --love: #ff4d6d;
+            --neon: #00f2ff; --glass: rgba(10, 10, 10, 0.9);
+        }
+
+        * { cursor: none; margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #020202; color: white; font-family: 'Poppins', sans-serif; overflow: hidden; height: 100vh; }
+
+        /* --- MOUSE & AUDIO VISUALS --- */
+        #cursor {
+            position: fixed; width: 20px; height: 20px; background: var(--love);
+            border-radius: 50%; pointer-events: none; z-index: 9999;
+            box-shadow: 0 0 20px var(--love); transition: transform 0.1s;
+        }
+
+        #visualizer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 100px;
+            display: flex; align-items: flex-end; justify-content: center; gap: 2px;
+            pointer-events: none; z-index: 1; opacity: 0.5;
+        }
+        .v-bar { width: 10px; background: var(--love); border-radius: 5px 5px 0 0; animation: bounce 0.5s infinite alternate; }
+
+        /* --- 3D PHOTO CAROUSEL --- */
+        .carousel-container {
+            perspective: 1000px; padding-top: 50px; height: 300px;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .carousel {
+            width: 150px; height: 200px; position: absolute;
+            transform-style: preserve-3d; animation: rotate 20s infinite linear;
+        }
+        .carousel:hover { animation-play-state: paused; }
+        .carousel div {
+            position: absolute; width: 150px; height: 200px;
+            border: 3px solid white; border-radius: 15px; overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 77, 109, 0.5);
+        }
+        .carousel img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- STAGE & CARDS --- */
+        .stage { position: relative; z-index: 10; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+        .mega-card {
+            width: 800px; background: var(--glass); backdrop-filter: blur(20px);
+            border-radius: 40px; padding: 50px; border: 1px solid rgba(0, 242, 255, 0.2);
+            display: none; text-align: center; box-shadow: 0 0 100px rgba(0,0,0,1);
+        }
+        .mega-card.active { display: block; animation: zoomIn 0.8s cubic-bezier(0.1, 0.9, 0.2, 1); }
+
+        /* --- ANIMATIONS --- */
+        @keyframes rotate { from { transform: rotateY(0); } to { transform: rotateY(360deg); } }
+        @keyframes bounce { from { height: 10px; } to { height: 80px; } }
+        @keyframes zoomIn { from { transform: scale(0.5) rotateX(45deg); opacity: 0; } to { transform: scale(1) rotateX(0); opacity: 1; } }
+
+        .neon-text { font-family: 'Orbitron'; color: var(--neon); text-shadow: 0 0 10px var(--neon); letter-spacing: 5px; }
+        .btn {
+            background: linear-gradient(45deg, var(--love), #ff85a1);
+            color: white; border: none; padding: 15px 40px; border-radius: 50px;
+            font-size: 1rem; font-weight: 900; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.4); margin-top: 20px;
+        }
+        .btn:hover { transform: scale(1.1); box-shadow: 0 0 50px var(--love); }
+        .mm-font { font-family: 'Padauk', sans-serif; line-height: 2; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div id="visualizer"></div>
+
+    <audio id="bgMusic" loop>
+        <source src="01.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="stage">
+        <div class="mega-card active" id="p1">
+            <h1 class="neon-text">SYSTEM INITIATED</h1>
+            <p style="margin: 20px 0;">Searching for the most beautiful girl in the world...</p>
+            <h1 style="font-family: 'Dancing Script'; font-size: 4rem; color: var(--love);">Nang Ngin Hmway</h1>
+            <button class="btn" onclick="startExperience()">OPEN FILES ⮕</button>
+        </div>
+
+        <div class="mega-card" id="p2">
+            <h1 class="neon-text">MEMORY CORE</h1>
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div style="transform: rotateY(0deg) translateZ(250px);"><img src="01.jfif"></div>
+                    <div style="transform: rotateY(72deg) translateZ(250px);"><img src="02.jfif"></div>
+                    <div style="transform: rotateY(144deg) translateZ(250px);"><img src="03).jfif"></div>
+                    <div style="transform: rotateY(216deg) translateZ(250px);"><img src="04.jfif"></div>
+                    <div style="transform: rotateY(288deg) translateZ(250px);"><img src="05.jfif"></div>
+                </div>
+            </div>
+            <p class="mm-font">မောင့်မျက်လုံးထဲမှာ အမြဲတမ်းအလှဆုံးဖြစ်နေမယ့် ချစ်ရသူလေး...</p>
+            <button class="btn" onclick="nav(3)">ZODIAC SYNC ⮕</button>
+        </div>
+
+        <div class="mega-card" id="p3">
+            <h1 class="neon-text">♊ SYNC ♏</h1>
+            <div style="display: flex; justify-content: space-around; align-items: center; margin: 30px 0;">
+                <div style="color: var(--gemini); font-size: 4rem;">♊</div>
+                <div id="sync-percent" style="font-size: 3rem; font-family: 'Orbitron'; color: var(--love);">0%</div>
+                <div style="color: var(--scorpio); font-size: 4rem;">♏</div>
+            </div>
+            <div class="mm-font" style="text-align: left; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px;">
+                <b>Gemini:</b> စကားတွေအများကြီးပြောပြီး အမြဲပျော်အောင်ထားမယ်။ <br>
+                <b>Scorpio:</b> ဘယ်သူ့ကိုမှ စိတ်မဝင်စားဘဲ ချစ်ကိုပဲ တစ်သက်လုံး ရူးရူးမူးမူးချစ်မယ်။ <br>
+                <b>Conclusion:</b> မောင်တို့နှစ်ယောက်က ခွဲလို့မရတဲ့ ကံကြမ္မာတွေပဲ။
+            </div>
+            <button class="btn" onclick="nav(4)">SEND KISSES 💋</button>
+        </div>
+
+        <div class="mega-card" id="p4">
+            <h1 class="neon-text">KISS GENERATOR</h1>
+            <p>Click the heart to launch a Love Attack!</p>
+            <div id="heart-btn" style="font-size: 8rem; cursor: pointer; filter: drop-shadow(0 0 20px var(--love));" onclick="storm(event)">❤️</div>
+            <div id="k-count" style="font-size: 2rem; font-family: 'Orbitron';">KISSES: 0</div>
+            <button class="btn" onclick="nav(5)">THE CONTRACT ⮕</button>
+        </div>
+
+        <div class="mega-card" id="p5">
+            <h1 class="neon-text">FINAL PROTOCOL</h1>
+            <p class="mm-font">မောင့်ဘေးမှာ အမြဲရှိနေပေးပါ့မယ်လို့ ကတိပေးမလား?</p>
+            <div style="margin: 30px 0;">
+                <input type="text" id="sig" placeholder="Type 'YES' to Sign" style="background:transparent; border:none; border-bottom: 2px solid var(--neon); color: white; text-align: center; font-size: 2rem; outline: none;">
+            </div>
+            <button class="btn" onclick="seal()">SEAL FOREVER 💍</button>
+        </div>
+
+        <div class="mega-card" id="p6">
+            <h1 style="font-family: 'Dancing Script'; font-size: 5rem; color: var(--love);">I Love You!</h1>
+            <p class="mm-font">Nang Ngin Hmway... မောင် ချစ်ကို အများကြီး ဂရုစိုက်ပြီး အမြဲချစ်သွားမှာပါ။</p>
+            <p class="neon-text">HAPPY 2-MONTH ANNIVERSARY</p>
+            <div style="font-size: 4rem; margin-top: 20px;">💑👑✨</div>
+        </div>
+    </div>
+
+    <script>
+        // --- CURSOR ---
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            const card = document.querySelector('.mega-card.active');
+            if(card) {
+                const x = (window.innerWidth / 2 - e.clientX) / 30;
+                const y = (window.innerHeight / 2 - e.clientY) / 30;
+                card.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
+            }
+        });
+
+        // --- MUSIC VISUALIZER ---
+        const viz = document.getElementById('visualizer');
+        for(let i=0; i<60; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'v-bar';
+            bar.style.animationDelay = (i * 0.05) + 's';
+            viz.appendChild(bar);
+        }
+
+        function startExperience() {
+            document.getElementById('bgMusic').play();
+            nav(2);
+        }
+
+        function nav(id) {
+            document.querySelectorAll('.mega-card').forEach(c => c.classList.remove('active'));
+            document.getElementById('p'+id).classList.add('active');
+            if(id === 3) {
+                let p = 0;
+                const int = setInterval(() => {
+                    p++; document.getElementById('sync-percent').innerText = p + "%";
+                    if(p === 100) clearInterval(int);
+                }, 20)
+            }
+        }
+
+        let count = 0;
+        function storm(e) {
+            count++;
+            document.getElementById('k-count').innerText = "KISSES: " + count;
+            for(let i=0; i<15; i++) {
+                const k = document.createElement('div');
+                k.innerHTML = '💋'; k.style.position = 'fixed';
+                k.style.left = e.clientX + 'px'; k.style.top = e.clientY + 'px';
+                k.style.fontSize = Math.random()*40 + 20 + 'px';
+                k.style.transition = '1s ease-out'; k.style.pointerEvents = 'none';
+                document.body.appendChild(k);
+                setTimeout(() => {
+                    k.style.transform = `translate(${(Math.random()-0.5)*500}px, ${(Math.random()-0.5)*500}px) scale(0) rotate(360deg)`;
+                    k.style.opacity = '0';
+                }, 50);
+                setTimeout(() => k.remove(), 1000);
+            }
+        }
+
+        function seal() {
+            const val = document.getElementById('sig').value;
+            if(val.toUpperCase() === "YES") {
+                nav(6);
+                setInterval(fireworks, 300);
+            } else { alert("Please type YES, my love! ❤️"); }
+        }
+
+        function fireworks() {
+            const f = document.createElement('div');
+            f.innerHTML = '🌸'; f.style.position = 'fixed';
+            f.style.left = Math.random()*100+'vw'; f.style.top = '100vh';
+            f.style.fontSize = '30px'; f.style.transition = '2s ease-out';
+            document.body.appendChild(f);
+            setTimeout(() => { f.style.top = Math.random()*50+'vh'; f.style.transform = 'scale(3)'; f.style.opacity = '0'; }, 50);
+            setTimeout(() => f.remove(), 2000);
+        }
+    </script>
+</body>
+</html>
